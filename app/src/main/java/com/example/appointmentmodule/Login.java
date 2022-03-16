@@ -52,9 +52,14 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         dialog.dismiss();
                         if (task.isSuccessful()){
-                            String userId = auth.getCurrentUser().getUid();
-                            Toast.makeText(Login.this, "Login successfully\nUID is: "+ userId, Toast.LENGTH_SHORT).show();
+                            //String userId = auth.getCurrentUser().getUid();
 
+                            Intent intent = new Intent(Login.this, DoctorView.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("email", email);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            //Toast.makeText(Login.this, "email sent is: " + email, Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Login.this, DoctorView.class));
                         }
                         else{

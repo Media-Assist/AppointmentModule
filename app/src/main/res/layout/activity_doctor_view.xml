@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -21,12 +22,14 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/bg1" />
 
+
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:src="@mipmap/doctor_image2"
+            android:src="@mipmap/doctor_image1"
             app:civ_border_color="#27424D"
             app:civ_border_width="2dp" />
 
@@ -82,7 +85,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:hint="5 Years"
+
+                    android:hint="1"
                     android:paddingTop="5dp" />
             </LinearLayout>
 
@@ -179,6 +183,8 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
+
