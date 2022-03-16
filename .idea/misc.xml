@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/drawable/button_background.xml" value="0.1" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/drawable/tab_background.xml" value="0.208" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/font/abril_fatface.xml" value="0.2546875" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_doctor.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_doctor_profile.xml" value="0.33" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_doctor_update.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_doctor_view.xml" value="0.33" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_login.xml" value="0.16893115942028986" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_specialization.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_temp.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/app_bar_layout.xml" value="0.22447916666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

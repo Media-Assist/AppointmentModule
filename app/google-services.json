@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "238530732532",
+    "firebase_url": "https://medi-assistant-8c98d-default-rtdb.firebaseio.com",
+    "project_id": "medi-assistant-8c98d",
+    "storage_bucket": "medi-assistant-8c98d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238530732532:android:45adaa13701379d08b19a1",
+        "android_client_info": {
+          "package_name": "com.example.appointmentmodule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgIAIEhuuLndijnjMXyqJq-EXe6tF4M68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238530732532:android:bb9dbeb339e0b5e68b19a1",
+        "android_client_info": {
+          "package_name": "com.example.mediassist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgIAIEhuuLndijnjMXyqJq-EXe6tF4M68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238530732532:android:50a37f68350dd6d28b19a1",
+        "android_client_info": {
+          "package_name": "com.example.mediassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgIAIEhuuLndijnjMXyqJq-EXe6tF4M68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238530732532-9ks795kb9ltg0rc0qhqlpo2fhkogmktf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
