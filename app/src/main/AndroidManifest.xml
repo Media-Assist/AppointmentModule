@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppointmentModule">
         <activity
+            android:name=".BookAppointment"
+            android:exported="false" />
+        <activity
             android:name=".Temp"
             android:exported="false" />
         <activity

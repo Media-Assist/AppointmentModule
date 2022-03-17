@@ -14,3 +14,6 @@
                         send.putExtra("DoctorEmail",email);
                         startActivity(send);
                         finish();
+
+
+

@@ -3,13 +3,19 @@ package com.example.appointmentmodule;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +36,6 @@ public class DoctorView extends AppCompatActivity {
     TextView fullname, experience, phone, specialization, city, education;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button btn;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,33 +75,83 @@ public class DoctorView extends AppCompatActivity {
             }
         });
 
-        /*
-        Calendar calendar = Calendar.getInstance();
-        calendar.clear();
-
-        final long today = MaterialDatePicker.todayInUtcMilliseconds();
-
-        MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
-        builder.setTitleText("Select a Date");
-        builder.setSelection(today);
-        final   MaterialDatePicker materialDatePicker = builder.build();
+        final Calendar calendar = Calendar.getInstance();
+        int day=calendar.get(Calendar.DAY_OF_MONTH);
+        int month=calendar.get(Calendar.MONTH);
+        int year=calendar.get(Calendar.YEAR);
 
         btn = findViewById(R.id.book_appointment_button);
+        /*
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                materialDatePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+                picker = new DatePickerDialog( DoctorView.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                    }
+                }, year, month, day);
+                picker.show();
+
+                Intent selected_date = new Intent(DoctorView.this, Temp.class);
+                selected_date.putExtra("day", day);
+                selected_date.putExtra("month",month );
+                selected_date.putExtra("year", year);
+                Toast.makeText(DoctorView.this, "Day: " + day , Toast.LENGTH_SHORT).show();
+                String temp = Integer.toString(day) + "-" + Integer.toString(month) + "-" + Integer.toString(year);
+                selected_date.putExtra("finaldate", temp);
+
+                picker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+                        startActivity(selected_date);
+                        finish();
+
+                        startActivity(new Intent(DoctorView.this, Temp.class));
+                    }
+                });
+
             }
         });
+        don't know the working of this. Hencing commenthing for some time.
+         */
 
-        Intent selected_date = new Intent(DoctorView.this, Temp.class);
-        String temp = materialDatePicker.getHeaderText();
-        selected_date.putExtra("date", temp);
-        startActivity(selected_date);
-        finish();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog picker = new DatePickerDialog(DoctorView.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                         month = month + 1;
+                         // Strange error here. The sent value is yyyymmdd instead of ddmmyyyy. Don't know the erason.
+                        // Also textbox is not visible when using getintent(). It's working with bundles.
+                         String date = day + "-" + month + "-" + year;
+                        Log.d("checkpoint1", "Date1 here is: " + date + "\n");
+                        experience.setText(date);
+                    }
+                }, year, month, day);
+                picker.show();
 
-        startActivity(new Intent(DoctorView.this, Temp.class));
-        */
+
+                picker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        month = month + 1;
+                        String date = day + "-" + month + "-" + year;
+                        Intent selected_date = new Intent(DoctorView.this, Temp.class);
+                        Log.d("checkpoint1", "Date2 here is: " + date + "\n");
+                        selected_date.putExtra("finaldate", date);
+                        startActivity(selected_date);
+                        finish();
+                        Toast.makeText(DoctorView.this, "Final date: " + date, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DoctorView.this, Temp.class));
+                    }
+                });
+
+
+            }
+        });
     }
 
 }

@@ -5,18 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Temp extends AppCompatActivity {
-    TextView view;
+    TextView view1;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
-        Intent intent = getIntent();
-        String date = intent.getStringExtra("date");
+        Bundle bundle = getIntent().getExtras();
+        String date = bundle.getString("finaldate", "Default");
 
-        view = findViewById(R.id.textView2);
-        view.setText(date);
-
+        //Intent intent = getIntent();
+        //date = intent.getStringExtra("finaldate");
+        Toast.makeText(Temp.this, "Date check: " + date, Toast.LENGTH_SHORT).show();
+        view1 = findViewById(R.id.textView1);
+        view1.setText(date);
     }
 }
