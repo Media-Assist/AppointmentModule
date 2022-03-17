@@ -58,9 +58,9 @@ public class Login extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("email", email);
                             intent.putExtras(bundle);
-                            startActivity(intent);
+                            //startActivity(intent);
                             //Toast.makeText(Login.this, "email sent is: " + email, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, DoctorView.class));
+                            startActivity(new Intent(Login.this, Doctor.class));
                         }
                         else{
                             Toast.makeText(Login.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
