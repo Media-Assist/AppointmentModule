@@ -81,41 +81,6 @@ public class DoctorView extends AppCompatActivity {
         int year=calendar.get(Calendar.YEAR);
 
         btn = findViewById(R.id.book_appointment_button);
-        /*
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                picker = new DatePickerDialog( DoctorView.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month = month + 1;
-                    }
-                }, year, month, day);
-                picker.show();
-
-                Intent selected_date = new Intent(DoctorView.this, Temp.class);
-                selected_date.putExtra("day", day);
-                selected_date.putExtra("month",month );
-                selected_date.putExtra("year", year);
-                Toast.makeText(DoctorView.this, "Day: " + day , Toast.LENGTH_SHORT).show();
-                String temp = Integer.toString(day) + "-" + Integer.toString(month) + "-" + Integer.toString(year);
-                selected_date.putExtra("finaldate", temp);
-
-                picker.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
-                        startActivity(selected_date);
-                        finish();
-
-                        startActivity(new Intent(DoctorView.this, Temp.class));
-                    }
-                });
-
-            }
-        });
-        don't know the working of this. Hencing commenthing for some time.
-         */
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

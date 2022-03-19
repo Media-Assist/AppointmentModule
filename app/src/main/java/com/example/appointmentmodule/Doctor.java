@@ -70,7 +70,7 @@ public class Doctor extends AppCompatActivity {
                         int count = 0;
                         for (DocumentChange dc: value.getDocumentChanges()){
                             if (dc.getType() == DocumentChange.Type.ADDED){
-                                Log.d("counter", String.valueOf(++count));
+                                //Log.d("counter", String.valueOf(++count));
                               doctorsListArrayList.add(dc.getDocument().toObject(DoctorsList.class));
 
                             }
