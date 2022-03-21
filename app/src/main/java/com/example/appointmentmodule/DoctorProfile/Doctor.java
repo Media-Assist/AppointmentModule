@@ -1,4 +1,4 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.DoctorProfile;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.appointmentmodule.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;

@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.appointmentmodule.DoctorProfile.Doctor;
+import com.example.appointmentmodule.Fragments.DoctorFrag;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import android.os.Bundle;
 
 public class Login extends AppCompatActivity {
 
@@ -54,13 +54,15 @@ public class Login extends AppCompatActivity {
                         if (task.isSuccessful()){
                             //String userId = auth.getCurrentUser().getUid();
 
-                            Intent intent = new Intent(Login.this, DoctorView.class);
+                            Intent intent = new Intent(Login.this, DoctorFrag.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("email", email);
                             intent.putExtras(bundle);
                             //startActivity(intent);
                             //Toast.makeText(Login.this, "email sent is: " + email, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, Doctor.class));
+
+                            //for checking changing this to main2.class from Doctor.class
+                            startActivity(new Intent(Login.this, MainActivity2.class));
                         }
                         else{
                             Toast.makeText(Login.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
