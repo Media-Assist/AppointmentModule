@@ -1,10 +1,39 @@
-<androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recylerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+<EditText
+        android:id="@+id/patient_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="patient email"
+
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/doctor_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+<Button
+        android:id="@+id/ptn_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pat_submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/doc_btn"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_email" />
+
+
+        mConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (alreadyBooked.contains(flagChecked) ){
+                            Toast.makeText(BookAppointment.this, "Slot is already booked, select another one", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (flagChecked != 0){
+                            Toast.makeText(BookAppointment.this, "Slot :" + flagChecked, Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(BookAppointment.this, "Please Select Time Slot", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });

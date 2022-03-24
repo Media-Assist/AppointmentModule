@@ -9,9 +9,19 @@
     android:orientation="vertical"
     tools:context=".DoctorView">
 
-    <include
-        android:id="@+id/patient_doctorProfile_toolbar"
-        layout="@layout/app_bar_layout" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:minHeight="?actionBarSize"
+        android:padding="@dimen/appbar_padding"
+        android:text="@string/doctor_profile"
+        android:background="@drawable/tab_background"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
 
     <FrameLayout
         android:layout_width="match_parent"

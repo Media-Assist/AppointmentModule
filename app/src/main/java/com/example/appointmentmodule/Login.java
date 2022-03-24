@@ -3,7 +3,9 @@ package com.example.appointmentmodule;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,7 @@ public class Login extends AppCompatActivity {
 
     EditText emailBox, passwordBox;
     Button loginBtn, signupBtn;
-
+    SharedPreferences sp;
     FirebaseAuth auth;
 
     ProgressDialog dialog;
@@ -47,6 +49,7 @@ public class Login extends AppCompatActivity {
                 String email, password;
                 email = emailBox.getText().toString();
                 password = passwordBox.getText().toString();
+
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -58,8 +61,13 @@ public class Login extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("email", email);
                             intent.putExtras(bundle);
+
+                            sp = getSharedPreferences("patientData", Context.MODE_PRIVATE);
                             //startActivity(intent);
                             //Toast.makeText(Login.this, "email sent is: " + email, Toast.LENGTH_SHORT).show();
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("patient_email", email);
+                            editor.commit();
 
                             //for checking changing this to main2.class from Doctor.class
                             startActivity(new Intent(Login.this, MainActivity2.class));

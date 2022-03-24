@@ -27,7 +27,7 @@ public class Doctor extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<DoctorsList> doctorsListArrayList;
-    DoctorListAdapter doctorListAdapter;
+    DoctorAdaptor doctorAdaptor;
     FirebaseFirestore db;
     ProgressDialog progressDialog;
     @Override
@@ -46,9 +46,9 @@ public class Doctor extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         doctorsListArrayList = new ArrayList<DoctorsList>();
-        doctorListAdapter = new DoctorListAdapter(Doctor.this, doctorsListArrayList);
+        doctorAdaptor = new DoctorAdaptor(Doctor.this, doctorsListArrayList);
 
-        recyclerView.setAdapter(doctorListAdapter);
+        recyclerView.setAdapter(doctorAdaptor);
 
         EventChangeListener();
     }
@@ -72,10 +72,11 @@ public class Doctor extends AppCompatActivity {
                         for (DocumentChange dc: value.getDocumentChanges()){
                             if (dc.getType() == DocumentChange.Type.ADDED){
                                 //Log.d("counter", String.valueOf(++count));
+
                               doctorsListArrayList.add(dc.getDocument().toObject(DoctorsList.class));
 
                             }
-                            doctorListAdapter.notifyDataSetChanged();
+                            doctorAdaptor.notifyDataSetChanged();
                             if(progressDialog.isShowing()){
                                 progressDialog.dismiss();
                             }

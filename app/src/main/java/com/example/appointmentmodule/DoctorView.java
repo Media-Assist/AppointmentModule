@@ -9,7 +9,9 @@ import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.TimeZone;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +38,16 @@ public class DoctorView extends AppCompatActivity {
     TextView fullname, experience, phone, specialization, city, education;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button btn;
+    SharedPreferences sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_view);
 
+        sp = getSharedPreferences("patientData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
 
         fullname = findViewById(R.id.patient_doctorProfile_name);
         specialization = findViewById(R.id.patient_doctorProfile_specialization);
@@ -50,8 +56,9 @@ public class DoctorView extends AppCompatActivity {
         phone = findViewById(R.id.patient_doctorProfile_contact);
         city = findViewById(R.id.patient_doctorProfile_city);
 
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("email", "Default");
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("patientData", Context.MODE_PRIVATE);
+        String email = sp.getString("selected_doctor", "");
+
 
         DocumentReference documentReference = db.collection("Doctors").document(email);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -104,13 +111,9 @@ public class DoctorView extends AppCompatActivity {
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month + 1;
                         String date = day + "-" + month + "-" + year;
-                        Intent selected_date = new Intent(DoctorView.this, Temp.class);
-                        Log.d("checkpoint1", "Date2 here is: " + date + "\n");
-                        selected_date.putExtra("finaldate", date);
-                        startActivity(selected_date);
-                        finish();
-                        Toast.makeText(DoctorView.this, "Final date: " + date, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DoctorView.this, Temp.class));
+                        editor.putString("selected_date", date);
+                        editor.commit();
+                        startActivity(new Intent(DoctorView.this, BookAppointment.class));
                     }
                 });
 

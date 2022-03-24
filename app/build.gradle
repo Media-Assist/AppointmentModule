@@ -55,5 +55,10 @@ dependencies {
     //card view
     implementation "androidx.cardview:cardview:1.0.0"
 
+    //firebase UI
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+
+
+
 
 }
