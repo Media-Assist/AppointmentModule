@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RealtimeDB.Login2">
+
+
+    <EditText
+        android:id="@+id/doctor_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="93dp"
+        android:hint="doctor email"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/doc_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="doc_submit"
+        app:layout_constraintStart_toStartOf="@+id/doctor_email"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_email" />
+
+    <EditText
+        android:id="@+id/check_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="122dp"
+
+        android:layout_marginBottom="257dp"
+        android:hint="Check email"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="59dp"
+        android:text="submit"
+        app:layout_constraintStart_toStartOf="@+id/check_email"
+        app:layout_constraintTop_toBottomOf="@+id/check_email" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

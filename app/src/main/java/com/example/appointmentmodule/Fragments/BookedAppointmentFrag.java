@@ -1,23 +1,26 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.Fragments;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appointmentmodule.Patient.Patient;
 import com.example.appointmentmodule.Patient.PatientAdapter;
+import com.example.appointmentmodule.R;
+import com.example.appointmentmodule.Temp;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,48 +28,56 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
-public class Temp extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    PatientAdapter patientAdapter;
-    ArrayList<Patient> patientArrayList;
+public class BookedAppointmentFrag extends Fragment {
+
+
+    public BookedAppointmentFrag() { }
+
+    private RecyclerView recyclerView;
+    private PatientAdapter patientAdapter;
+    private ArrayList<Patient> patientArrayList;
+    private ArrayAdapter<String> arrayAdapter;
     DatabaseReference db;
     String updated_patient_email, patient_email, doc_name, doc_specialization;
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_temp);
 
-        patient_email = "patient2@gmail.com";
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view =  inflater.inflate(R.layout.fragment_booked_appointment, container, false);
+
+        SharedPreferences sp = this.getActivity().getSharedPreferences("patientData", Context.MODE_PRIVATE);
+        patient_email = sp.getString("patient_email", "");
         updated_patient_email = patient_email.replace('.', ',');
 
-        recyclerView = findViewById(R.id.recycleview1);
+        recyclerView = view.findViewById(R.id.recycleview1);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         patientArrayList = new ArrayList<>();
-        patientAdapter = new PatientAdapter(Temp.this, patientArrayList);
+        patientAdapter = new PatientAdapter(getContext(), patientArrayList);
 
         recyclerView.setAdapter(patientAdapter);
         EventChangeListener();
 
-
+        return view;
     }
 
-    private void EventChangeListener() {
+    private void EventChangeListener()  {
         db = FirebaseDatabase.getInstance().getReference("AppointmentPatient").child(updated_patient_email);
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -106,14 +117,14 @@ public class Temp extends AppCompatActivity {
 
                                         patientAdapter.notifyDataSetChanged();
                                     }else{
-                                        Toast.makeText(Temp.this, "Row not found", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Row not found", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(Temp.this, "Data couldn't be fetched", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Data couldn't be fetched", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
@@ -175,4 +186,6 @@ public class Temp extends AppCompatActivity {
 
         });
     }
+
+
 }

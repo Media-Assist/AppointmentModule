@@ -3,6 +3,7 @@ package com.example.appointmentmodule;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -154,7 +155,13 @@ public class BookAppointment extends AppCompatActivity implements  View.OnClickL
                     updatePatient(flagChecked);
 
                     // Both patient and doctor database entries complete, now going to see patient booked appointments
-                    startActivity(new Intent(BookAppointment.this, Temp.class));
+
+                    Intent intent = new Intent(BookAppointment.this ,MainActivity2.class);
+                    startActivity(intent);
+                    //getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new BookedAppointmentFrag()).commit();
+                    //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    //fragmentTransaction.replace(R.id.mainContainer, new BookedAppointmentFrag()).commit();
+                    //startActivity(new Intent(BookAppointment.this, BookedAppointmentFrag.class));
                     Toast.makeText(BookAppointment.this, "Slot :" + flagChecked, Toast.LENGTH_SHORT).show();
 
                 }else{
