@@ -20,14 +20,16 @@
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_specialization.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/activity_temp.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/app_bar_layout.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/doctor_list_dialog.xml" value="0.2125" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/fragment_booked_appointment.xml" value="0.21041666666666667" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/fragment_doctor.xml" value="0.25" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/fragment_main.xml" value="0.25" />
-        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/fragment_specialization.xml" value="0.21203703703703702" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/fragment_specialization.xml" value="0.33" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/item.xml" value="0.5" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/single_doctor.xml" value="0.2125" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/single_doctor_list.xml" value="0.33" />
         <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/single_show_appointment.xml" value="0.5" />
+        <entry key="..\:/Users/neelr_rzc8ain/AndroidStudioProjects/AppointmentModule/app/src/main/res/layout/single_specialization_list.xml" value="0.33" />
       </map>
     </option>
   </component>

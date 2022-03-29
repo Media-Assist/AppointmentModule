@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.Fragments;
+package com.example.appointmentmodule.Specialization;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -6,75 +6,98 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appointmentmodule.DoctorProfile.DoctorAdaptor;
-import com.example.appointmentmodule.DoctorProfile.DoctorsList;
+import com.example.appointmentmodule.Doctor.DoctorsList;
 import com.example.appointmentmodule.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class SpecializationFrag extends Fragment {
-    View view;
-
-    RecyclerView recyclerView;
-    ArrayList specialization = new ArrayList();
-    SpecializationViewHolder specializationAdapter;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+public class SpecializationFrag extends Fragment implements AdapterCallback{
     public SpecializationFrag() {
 
     }
 
+    RecyclerView recyclerView;
+    ArrayList<DoctorsList> doctorsListArrayList;
+    SpecializationAdapter specializationAdapter;
+    ProgressDialog progressDialog;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_specialization, container, false);
-        db = FirebaseFirestore.getInstance();
+        View view = inflater.inflate(R.layout.fragment_specialization, container, false);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("fetching data... ");
+        progressDialog.show();
+
+
         recyclerView = view.findViewById(R.id.specialization_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        db = FirebaseFirestore.getInstance();
+        doctorsListArrayList = new ArrayList<DoctorsList>();
+        specializationAdapter = new SpecializationAdapter(getContext(), doctorsListArrayList);
 
+        recyclerView.setAdapter(specializationAdapter);
         EventChangeListener();
 
         return view;
     }
 
-    private void EventChangeListener() {
-        CollectionReference collectionReference = db.collection("Doctors");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            int count = 0;
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document: task.getResult()){
-                        specialization.add(document.toObject(DoctorsList.class));
-                        String temp = document.getString("Specialization");
-                        Log.d("Check1", "query: " + temp);
+    private void EventChangeListener()  {
+
+        db.collection("Doctors").orderBy("FirstName", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if(error != null){
+
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+
+                            Log.e("Firststore error", error.getMessage());
+                            return ;
+                        }
+
+                        for (DocumentChange dc: value.getDocumentChanges()){
+                            if (dc.getType() == DocumentChange.Type.ADDED){
+                                //Log.d("counter", String.valueOf(++count));
+                                if (! (doctorsListArrayList.contains( dc.getDocument().toObject(DoctorsList.class) )) )
+                                    doctorsListArrayList.add(dc.getDocument().toObject(DoctorsList.class));
+                            }
+                            specializationAdapter.notifyDataSetChanged();
+                            if(progressDialog.isShowing()){
+                                progressDialog.dismiss();
+                            }
+                        }
                     }
+                });
 
-                }
-            }
-
-        });
     }
+
+    @Override
+    public void onMethodCallback( ) {
+        Toast.makeText(getContext(), "Inside fragment, methodcallback ", Toast.LENGTH_SHORT).show();
+
+    }
+    /*
     public static class DoctorListViewHolder extends RecyclerView.ViewHolder {
         View mView;
         public DoctorListViewHolder(View itemView) {
@@ -120,7 +143,7 @@ public class SpecializationFrag extends Fragment {
         }
     }
 
-    /*
+
     private void EventChangeListener() {
 
         db.collection("Doctors")

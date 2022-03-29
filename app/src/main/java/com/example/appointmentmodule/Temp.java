@@ -11,13 +11,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appointmentmodule.Doctor.DoctorsList;
 import com.example.appointmentmodule.Patient.Patient;
 import com.example.appointmentmodule.Patient.PatientAdapter;
+import com.example.appointmentmodule.Specialization.AdapterCallback;
+import com.example.appointmentmodule.Specialization.SpecializationAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -175,4 +179,59 @@ public class Temp extends AppCompatActivity {
 
         });
     }
-}
+    /*
+    public class SpecializationFrag extends Fragment implements AdapterCallback{
+
+        // This is minimum reproducable code.
+        // other code which I found unnecessary are skipped
+
+        @Override
+        public void onMethodCallback( ) {
+            Toast.makeText(getContext(), "Inside fragment, methodcallback ", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public class SpecializationAdapter extends RecyclerView.Adapter<SpecializationAdapter.MyViewHolder> {
+        ArrayList<DoctorsList> doctorsListArrayList;
+        private AdapterCallback adapterCallback;
+
+        // some more code that I've skipped
+
+        public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+            public SpecializationAdapter(Context context, ArrayList<DoctorsList> doctorsListArrayList){ // constructor for initialization
+                this.context = context;
+                this.doctorsListArrayList = doctorsListArrayList;
+                try{
+                    adapterCallback = ((AdapterCallback) context);
+                }catch (ClassCastException e) {
+                    Log.d("Error", e.toString());
+                }
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull com.example.appointmentmodule.Specialization.SpecializationAdapter.MyViewHolder holder, int position) {
+
+                // setting other variables using holder
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try{
+                            adapterCallback.onMethodCallback();
+
+                        }catch (ClassCastException e){
+                            Log.d("Error", e.toString());
+                        }
+                    }
+                });
+
+            }
+        }
+
+        }
+
+     */
+
+    }

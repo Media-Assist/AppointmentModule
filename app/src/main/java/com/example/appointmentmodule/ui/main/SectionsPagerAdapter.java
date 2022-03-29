@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.appointmentmodule.Fragments.BookedAppointmentFrag;
-import com.example.appointmentmodule.Fragments.DoctorFrag;
+import com.example.appointmentmodule.RealtimeDB.BookedAppointmentFrag;
+import com.example.appointmentmodule.Doctor.DoctorFrag;
 import com.example.appointmentmodule.R;
-import com.example.appointmentmodule.Fragments.SpecializationFrag;
+import com.example.appointmentmodule.Specialization.SpecializationFrag;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

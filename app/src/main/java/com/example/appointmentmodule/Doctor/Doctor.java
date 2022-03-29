@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.DoctorProfile;
+package com.example.appointmentmodule.Doctor;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

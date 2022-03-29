@@ -13,7 +13,7 @@
             android:name=".RealtimeDB.Login2"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".Home.MainActivity2"
             android:exported="false"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.AppointmentModule.NoActionBar" />
@@ -21,28 +21,28 @@
             android:name=".book_temp"
             android:exported="false" />
         <activity
-            android:name=".BookAppointment"
+            android:name=".RealtimeDB.BookAppointment"
             android:exported="false" />
         <activity
             android:name=".Temp"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".Home.Login"
             android:exported="false" />
         <activity
-            android:name=".DoctorView"
+            android:name=".Doctor.DoctorView"
             android:exported="false" />
         <activity
             android:name=".DoctorUpdate"
             android:exported="false" />
         <activity
-            android:name=".DoctorProfile.Doctor"
+            android:name=".Doctor.Doctor"
             android:exported="false" />
         <activity
-            android:name=".Specialization"
+            android:name=".Specialization.Specialization"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Home.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

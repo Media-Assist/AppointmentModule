@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/tab_background"
     android:padding="10dp"
-    tools:context=".Login">
+    tools:context=".Home.Login">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

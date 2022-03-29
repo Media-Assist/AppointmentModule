@@ -1,9 +1,8 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.RealtimeDB;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,21 +12,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.appointmentmodule.Fragments.BookedAppointmentFrag;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.material.slider.BaseOnChangeListener;
+import com.example.appointmentmodule.Home.MainActivity2;
+import com.example.appointmentmodule.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,7 +150,7 @@ public class BookAppointment extends AppCompatActivity implements  View.OnClickL
 
                     // Both patient and doctor database entries complete, now going to see patient booked appointments
 
-                    Intent intent = new Intent(BookAppointment.this ,MainActivity2.class);
+                    Intent intent = new Intent(BookAppointment.this , MainActivity2.class);
                     startActivity(intent);
                     //getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new BookedAppointmentFrag()).commit();
                     //FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

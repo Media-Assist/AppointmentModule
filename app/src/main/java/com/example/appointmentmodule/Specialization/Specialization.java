@@ -1,8 +1,10 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.Specialization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.appointmentmodule.R;
 
 public class Specialization extends AppCompatActivity {
 

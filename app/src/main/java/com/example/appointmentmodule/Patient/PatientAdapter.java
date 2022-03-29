@@ -1,8 +1,6 @@
 package com.example.appointmentmodule.Patient;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,23 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appointmentmodule.DoctorProfile.DoctorsList;
-import com.example.appointmentmodule.DoctorView;
 import com.example.appointmentmodule.R;
-import com.example.appointmentmodule.Temp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHolder > {

@@ -1,12 +1,11 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.appointmentmodule.Fragments.BookedAppointmentFrag;
-import com.example.appointmentmodule.RealtimeDB.Login2;
+import com.example.appointmentmodule.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(MainActivity.this, Login.class));
+        startActivity(new Intent(MainActivity.this, MainActivity2.class));
 
     }
 }

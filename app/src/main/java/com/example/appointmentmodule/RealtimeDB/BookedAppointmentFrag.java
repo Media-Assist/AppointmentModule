@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.Fragments;
+package com.example.appointmentmodule.RealtimeDB;
 
 import android.content.Context;
 import android.content.SharedPreferences;

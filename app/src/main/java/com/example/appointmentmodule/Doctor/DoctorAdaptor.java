@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.DoctorProfile;
+package com.example.appointmentmodule.Doctor;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appointmentmodule.DoctorView;
 import com.example.appointmentmodule.R;
 
 import java.util.ArrayList;
@@ -42,7 +41,6 @@ public class DoctorAdaptor extends RecyclerView.Adapter<DoctorAdaptor.MyViewHold
           DoctorsList doctorsList = doctorsListArrayList.get(position);
 
           //holder.FirstName.setText(doctorsList.FirstName + " " + doctorsList.LastName); changed this
-
           holder.FullName.setText(doctorsList.FirstName + " " + doctorsList.LastName);
           holder.Specialization.setText(doctorsList.Specialization);
     }

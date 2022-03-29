@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/mainContainer"
-    tools:context=".BookAppointment">
+    tools:context=".RealtimeDB.BookAppointment">
 
     <TextView
         android:id="@+id/title"

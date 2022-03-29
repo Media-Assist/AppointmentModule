@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.DoctorProfile;
+package com.example.appointmentmodule.Doctor;
 /**
  * This class is used for fetching the values from the firestore.
  * Same as User file

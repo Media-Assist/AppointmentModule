@@ -1,4 +1,4 @@
-package com.example.appointmentmodule.Fragments;
+package com.example.appointmentmodule.Doctor;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -16,8 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.appointmentmodule.DoctorProfile.DoctorAdaptor;
-import com.example.appointmentmodule.DoctorProfile.DoctorsList;
+import com.example.appointmentmodule.Doctor.DoctorAdaptor;
+import com.example.appointmentmodule.Doctor.DoctorsList;
 import com.example.appointmentmodule.R;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;

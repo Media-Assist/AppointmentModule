@@ -1,4 +1,4 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.Home;
 
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -1,4 +1,4 @@
-package com.example.appointmentmodule;
+package com.example.appointmentmodule.Home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.appointmentmodule.DoctorProfile.Doctor;
-import com.example.appointmentmodule.Fragments.DoctorFrag;
+import com.example.appointmentmodule.Doctor.DoctorFrag;
+import com.example.appointmentmodule.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
