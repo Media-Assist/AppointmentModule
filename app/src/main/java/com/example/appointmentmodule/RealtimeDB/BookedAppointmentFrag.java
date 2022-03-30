@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appointmentmodule.Patient.Patient;
@@ -50,10 +51,13 @@ public class BookedAppointmentFrag extends Fragment {
     private PatientAdapter patientAdapter;
     private ArrayList<Patient> patientArrayList;
     private ArrayAdapter<String> arrayAdapter;
+    Boolean flag = false;
     DatabaseReference db;
-    String updated_patient_email, patient_email, doc_name, doc_specialization;
-    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
+    String updated_patient_email, patient_email, doc_name, doc_specialization;
+    TextView textView;
+    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,6 +75,8 @@ public class BookedAppointmentFrag extends Fragment {
         patientArrayList = new ArrayList<>();
         patientAdapter = new PatientAdapter(getContext(), patientArrayList);
 
+        textView = view.findViewById(R.id.textView3);
+
         recyclerView.setAdapter(patientAdapter);
         EventChangeListener();
 
@@ -84,9 +90,15 @@ public class BookedAppointmentFrag extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
+                    /**
+                     * TODO: update the method to remove an item from the list for delete appointment
+                     * This is not a correct method to update the recycle view.
+                     * This is fetching the list all again when an item is removed from the recyele view.
+                     * Update this if you find a solution.
+                     * */
+                    patientArrayList.clear();
+                    flag = false;
                     if (dataSnapshot.hasChildren()) {
-
                         HashMap<String, String> data = new HashMap<>();
                         data = (HashMap<String, String>) dataSnapshot.getValue();
 
@@ -111,15 +123,16 @@ public class BookedAppointmentFrag extends Fragment {
                                         Log.d("check3",
                                                 obj.getDoctorId() + " " + obj.getDoctorName() + " " + obj.getDoctorSpecialization() + "\n");
                                         patientArrayList.add(obj);
-
+                                        flag = true;
                                         Log.d("check1 ", "doctor is: " + entry.getValue() +
                                                 " Name: " + doc_name + " Specialization: " + doc_specialization + "\n");
-
+                                        textView.setVisibility(TextView.INVISIBLE);
                                         patientAdapter.notifyDataSetChanged();
                                     }else{
                                         Toast.makeText(getContext(), "Row not found", Toast.LENGTH_SHORT).show();
                                     }
                                 }
+
                             })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -127,8 +140,6 @@ public class BookedAppointmentFrag extends Fragment {
                                             Toast.makeText(getContext(), "Data couldn't be fetched", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-
-
                             Log.d("check1 after", "doctor is: " + entry.getValue() +
                                     " Name: " + doc_name + " Specialization: " + doc_specialization + "\n");
 
@@ -183,8 +194,18 @@ public class BookedAppointmentFrag extends Fragment {
 
             }
 
-
         });
+        showText();
+    }
+
+    private void showText() {
+        if ( !flag){
+            Log.d("checking_text", "No children\n");
+            textView.setVisibility(TextView.VISIBLE);
+        }else{
+            Log.d("checking_text", "Children, they are: " + patientArrayList + "\n");
+            textView.setVisibility(TextView.INVISIBLE);
+        }
     }
 
 

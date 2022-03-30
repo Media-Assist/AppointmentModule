@@ -20,10 +20,12 @@ import java.util.ArrayList;
 
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHolder > {
+
     ArrayList<Patient> patientList;
     Context context;
     SharedPreferences sp;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
     public PatientAdapter(Context context, ArrayList<Patient> patientList){
         this.patientList = patientList;
         this.context = context;
@@ -92,7 +94,13 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
             databaseReference.child("AppointmentDoctor").child(doc_email).child(date).child(slot).removeValue();
             databaseReference.child("AppointmentPatient").child(pat_email).child(date).child(slot).removeValue();
             patientList.remove(position);
-            
+            notifyDataSetChanged();
+            //notifyItemRemoved(getAdapterPosition());
+
+            //notifyItemRemoved(this.getLayoutPosition());
+
+
+
 
             Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
 
@@ -155,6 +163,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
             }
             return  slot;
         }
+
     }
 
 

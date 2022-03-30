@@ -6,9 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".RealtimeDB.BookedAppointmentFrag">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_appointment"
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/no_appointment"
+        android:visibility="invisible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleview1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:textAlignment="center">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </FrameLayout>

@@ -15,5 +15,7 @@
     <color name="light_gray">#D3D3D3</color>
     <color name="colorPrimary1">#0c9e4e</color>
     <color name="darkGreen">#009688</color>
+    <color name="red">#FF0000</color>
+    <color name="no_appointment">#004e92</color>
 
 </resources>

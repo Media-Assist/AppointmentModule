@@ -10,4 +10,5 @@
     <string name="book_appointment">Book Appointment</string>
     <string name="selected_date">Selected Date</string>
     <string name="search_doc">Search by Specialization</string>
+    <string name="no_appointment">No Appointment</string>
 </resources>
