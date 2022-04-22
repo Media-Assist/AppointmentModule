@@ -85,7 +85,6 @@ public class BookAppointment extends AppCompatActivity implements  View.OnClickL
         firebaseDatabase = FirebaseDatabase.getInstance();
         rootref =  firebaseDatabase.getReference("AppointmentDoctor").child(updated_selected_doctor).child(selected_date);
 
-        System.out.println("Hello World!" + "\n");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
 
@@ -132,16 +131,22 @@ public class BookAppointment extends AppCompatActivity implements  View.OnClickL
                 else if (flagChecked != 0){
                     //updatePatient(flagChecked);
 
+
+                    /**
+                     * Changed the updated_patient_email to patient_email
+                     * */
+
+
                     if(flag1){ // There is no key for selected_date
                         HashMap<String, String > userMap = new HashMap<>();
-                        userMap.put(String.valueOf(flagChecked), updated_patient_email);
+                        userMap.put(String.valueOf(flagChecked), patient_email);
 
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("AppointmentDoctor").child(finalVal);
                         databaseReference.child(selected_date).setValue(userMap);
                     }else{
 
                         HashMap<String, Object > userMap = new HashMap<>();
-                        userMap.put(String.valueOf(flagChecked), updated_patient_email);
+                        userMap.put(String.valueOf(flagChecked), patient_email);
 
                         rootref.updateChildren(userMap);
                     }

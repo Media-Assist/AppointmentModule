@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
     Context context;
     SharedPreferences sp;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
 
     public PatientAdapter(Context context, ArrayList<Patient> patientList){
         this.patientList = patientList;
@@ -57,18 +59,72 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
         return patientList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
         TextView doctor_name, appointment_time, doctor_specialization, appointment_date;
+        LinearLayout cancel_appointment, join_meeting;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-            doctor_name = itemView.findViewById(R.id.doctor_name);
+            //itemView.setOnClickListener(this);
+            doctor_name = itemView.findViewById(R.id.patient_name);
             doctor_specialization = itemView.findViewById(R.id.doctor_specialization);
             appointment_time = itemView.findViewById(R.id.appointment_time);
             appointment_date = itemView.findViewById(R.id.appointment_date);
+            cancel_appointment = itemView.findViewById(R.id.cancel_appointment);
+            join_meeting = itemView.findViewById(R.id.join_meeting);
+
+            cancel_appointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Patient patientObj = patientList.get(position);
+                    String date, slot, doc_email,pat_email;
+                    date = patientObj.getDate();
+                    slot = changeTimeToSlot( patientObj.getTime() );
+
+                    SharedPreferences sp = view.getContext().getSharedPreferences("patientData", Context.MODE_PRIVATE);
+                    pat_email = sp.getString("patient_email", "");
+                    pat_email = pat_email.replace('.',',');
+
+                    doc_email = patientObj.doctorId.replace('.',',');
+                    Toast.makeText(context, "Position is: " + String.valueOf(position)+
+                            "doctor_mail is: " + patientObj.doctorId, Toast.LENGTH_SHORT).show();
+
+                    databaseReference.child("AppointmentDoctor").child(doc_email).child(date).child(slot).removeValue();
+                    databaseReference.child("AppointmentPatient").child(pat_email).child(date).child(slot).removeValue();
+                    patientList.remove(position);
+                    notifyDataSetChanged();
+
+                    Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
+
+                    // TODO: Make an alert box while the user is clicking on delete.
+
+                }
+
+            });
+
+            join_meeting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Patient patientObj = patientList.get(position);
+                    String date, time, doc_email,pat_email;
+                    date = patientObj.getDate();
+                    time = patientObj.getTime();
+
+                    SharedPreferences sp = view.getContext().getSharedPreferences("patientData", Context.MODE_PRIVATE);
+                    pat_email = sp.getString("patient_email", "");
+                    doc_email = patientObj.doctorId;
+
+                    String meet_code = doc_email + pat_email + date + time;
+                    Toast.makeText(context, "MeetCode is: " + meet_code, Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
         }
 
 
+        /*
         @Override
         public void onClick(View view)  {
             //Log.d("Check1", "clicked");
@@ -104,10 +160,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
 
             Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
 
-            // TODO: Make an alert box while the user is clikcing on on delete.
+            // TODO: Make an alert box while the user is clicking on delete.
 
         }
-
+        */
         private String changeTimeToSlot(String time) {
             String slot = "";
             switch (time){

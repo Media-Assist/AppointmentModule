@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppointmentModule">
         <activity
+            android:name=".DoctorViewAppointment.BookedAppointmentViewDoctor"
+            android:exported="false" />
+        <activity
             android:name=".RealtimeDB.Login2"
             android:exported="false" />
         <activity

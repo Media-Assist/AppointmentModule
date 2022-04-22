@@ -63,7 +63,7 @@ public class DoctorAdaptor extends RecyclerView.Adapter<DoctorAdaptor.MyViewHold
             super(itemView);
             itemView.setOnClickListener(this);
 
-            FullName = itemView.findViewById(R.id.doctor_name);
+            FullName = itemView.findViewById(R.id.patient_name);
             Specialization = itemView.findViewById(R.id.doctor_specialization);
         }
 

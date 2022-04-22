@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appointmentmodule.Doctor.DoctorFrag;
+import com.example.appointmentmodule.DoctorViewAppointment.BookedAppointmentViewDoctor;
 import com.example.appointmentmodule.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -69,7 +70,8 @@ public class Login extends AppCompatActivity {
                             editor.putString("patient_email", email);
                             editor.commit();
 
-                            //for checking changing this to main2.class from Doctor.class
+                            // changing to mainactiviy2.class to bookapp...
+                            //startActivity(new Intent(Login.this, BookedAppointmentViewDoctor.class));
                             startActivity(new Intent(Login.this, MainActivity2.class));
                         }
                         else{

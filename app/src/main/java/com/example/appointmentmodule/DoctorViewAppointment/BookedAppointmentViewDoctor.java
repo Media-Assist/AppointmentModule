@@ -1,19 +1,14 @@
-package com.example.appointmentmodule.RealtimeDB;
+package com.example.appointmentmodule.DoctorViewAppointment;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +16,6 @@ import android.widget.Toast;
 import com.example.appointmentmodule.Patient.Patient;
 import com.example.appointmentmodule.Patient.PatientAdapter;
 import com.example.appointmentmodule.R;
-import com.example.appointmentmodule.Temp;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,101 +23,87 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
-public class BookedAppointmentFrag extends Fragment {
-
-
-    public BookedAppointmentFrag() { }
+public class BookedAppointmentViewDoctor extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private PatientAdapter patientAdapter;
-    private ArrayList<Patient> patientArrayList;
+    private PatientDetailsAdapter patientDetailsAdapter;
+    private ArrayList<PatientDetails> patientDetailsArrayList;
     private ArrayAdapter<String> arrayAdapter;
-    Boolean flag = false;
-    DatabaseReference db, doc_ref;
 
-    String updated_patient_email, patient_email, doc_name, doc_specialization;
+    Boolean flag = false;
+    DatabaseReference db;
+    String updated_doctor_email, doctor_email, pat_name, doc_specialization;
     TextView textView;
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    View view;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_booked_appointment_view_doctor);
 
-        View view =  inflater.inflate(R.layout.fragment_booked_appointment, container, false);
+        /*
+        * Here even though the name is patientData it's the data of user who has login. I am not changing it for now.
+        * */
+        SharedPreferences sp = this.getSharedPreferences("patientData", Context.MODE_PRIVATE);
+        doctor_email = sp.getString("patient_email", "");
+        updated_doctor_email = doctor_email.replace('.', ',');
+        Log.d("one", "updated_doctor_email: " + updated_doctor_email + "\n" );
 
-        SharedPreferences sp = this.getActivity().getSharedPreferences("patientData", Context.MODE_PRIVATE);
-        patient_email = sp.getString("patient_email", "");
-        updated_patient_email = patient_email.replace('.', ',');
-
-        recyclerView = view.findViewById(R.id.recycleview1);
+        recyclerView = findViewById(R.id.recycleViewDoctor);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        patientArrayList = new ArrayList<>();
-        patientAdapter = new PatientAdapter(getContext(), patientArrayList);
-
-        textView = view.findViewById(R.id.textView3);
-
-        recyclerView.setAdapter(patientAdapter);
-        EventChangeListener();
-
-        return view;
+        patientDetailsArrayList = new ArrayList<>();
+        patientDetailsAdapter = new PatientDetailsAdapter(this, patientDetailsArrayList);
+        recyclerView.setAdapter(patientDetailsAdapter);
     }
 
-    private void EventChangeListener()  {
-        doc_ref = FirebaseDatabase.getInstance().getReference("AppointmentPatient").child(updated_patient_email);
-        doc_ref.addValueEventListener(new ValueEventListener() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        db = FirebaseDatabase.getInstance().getReference("AppointmentDoctor").child(updated_doctor_email);
+        db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 for (DataSnapshot dates : snapshot.getChildren  ()) {
-
-                    patientArrayList.clear();
+                    patientDetailsArrayList.clear();
                     flag = false;
 
                     Log.d("one", "date: " + dates.getKey());
                     for(DataSnapshot dates_data : dates.getChildren()){
-                        Log.d("one", "dates_data key: " + dates_data.getKey() + " dates_data value: " + dates_data.getValue() );
+                        Log.d("one", " key: " + dates_data.getKey() + "  value: " + dates_data.getValue() );
 
-                        DocumentReference documentReference = firestore.collection("Doctors").document( dates_data.getValue().toString() );
+                        DocumentReference documentReference = firestore.collection("Patient").document( dates_data.getValue().toString() );
                         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 if(documentSnapshot.exists()){
-                                    doc_name= documentSnapshot.getString("FirstName") + " " + documentSnapshot.getString("LastName");
-                                    doc_specialization = documentSnapshot.getString("Specialization");
+                                    pat_name = documentSnapshot.getString("FirstName") + " " + documentSnapshot.getString("LastName");
+
 
                                     String a, b, c;
                                     a = dates.getKey().toString();
                                     b = slotToTime(dates_data.getKey() );
                                     c = dates_data.getValue().toString();
 
-                                    Patient obj = new Patient(a, b, c, doc_name, doc_specialization);
-                                    System.out.println("name: " + doc_name + " specialization: " + doc_specialization + "\n");
-                                    Log.d("check3",
-                                            obj.getDoctorId() + " " + obj.getDoctorName() + " " + obj.getDoctorSpecialization() + "\n");
-                                    patientArrayList.add(obj);
+                                    PatientDetails obj = new PatientDetails(a, b, c, pat_name );
+                                    System.out.println("name: " + pat_name  + "\n");
+
+                                    patientDetailsArrayList.add(obj);
                                     flag = true;
-                                    Log.d("one ", "doctor is: " + dates_data.getValue().toString() +
-                                            " Name: " + doc_name + " Specialization: " + doc_specialization + "\n");
-                                    textView.setVisibility(TextView.INVISIBLE);
-                                    patientAdapter.notifyDataSetChanged();
+
+
+                                    patientDetailsAdapter.notifyDataSetChanged();
                                 }else{
-                                    Toast.makeText(getContext(), "Row not found", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BookedAppointmentViewDoctor.this, "Row not found", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -131,7 +111,7 @@ public class BookedAppointmentFrag extends Fragment {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getContext(), "Data couldn't be fetched", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(BookedAppointmentViewDoctor.this, "Data couldn't be fetched", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -187,7 +167,12 @@ public class BookedAppointmentFrag extends Fragment {
             }
 
         });
-        showText();
+
+        /**
+         * Function showText() is useless currently. As I've not added a textbox.
+         * */
+        //showText();
+
     }
 
     private void showText() {
@@ -195,10 +180,8 @@ public class BookedAppointmentFrag extends Fragment {
             Log.d("checking_text", "No children\n");
             textView.setVisibility(TextView.VISIBLE);
         }else{
-            Log.d("checking_text", "Children, they are: " + patientArrayList + "\n");
+            Log.d("checking_text", "Children, they are: " + patientDetailsArrayList + "\n");
             textView.setVisibility(TextView.INVISIBLE);
         }
     }
-
-
 }

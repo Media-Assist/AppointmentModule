@@ -45,7 +45,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/doctor_name"
+                android:id="@+id/patient_name"
                 style="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

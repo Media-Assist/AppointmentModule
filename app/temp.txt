@@ -1,154 +1,183 @@
-package com.example.appointmentmodule.Fragments;
+package com.example.appointmentmodule.Patient;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appointmentmodule.DoctorProfile.DoctorAdaptor;
-import com.example.appointmentmodule.DoctorProfile.DoctorsList;
 import com.example.appointmentmodule.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SpecializationFrag extends Fragment {
-    View view;
+public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHolder > {
 
-    RecyclerView recyclerView;
-    ArrayList specialization = new ArrayList();
-    SpecializationViewHolder specializationAdapter;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public SpecializationFrag() {
+    ArrayList<Patient> patientList;
+    Context context;
+    SharedPreferences sp;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
+
+    public PatientAdapter(Context context, ArrayList<Patient> patientList){
+        this.patientList = patientList;
+        this.context = context;
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.single_show_appointment, parent, false);
+        return  new MyViewHolder(v);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_specialization, container, false);
-        db = FirebaseFirestore.getInstance();
-        recyclerView = view.findViewById(R.id.specialization_recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Patient patient = patientList.get(position);
 
 
-        EventChangeListener();
+        Log.d("check21", " doc_name " + patient.doctorName + " doc_specz: " + patient.doctorSpecialization + " \n");
+        holder.appointment_time.setText(patient.time);
+        holder.appointment_date.setText(patient.date);
+        holder.doctor_name.setText(patient.doctorName);
+        holder.doctor_specialization.setText(patient.doctorSpecialization);
 
-        return view;
+        Log.d("check22", " doc_name " + patient.doctorName + " doc_specz: " + patient.doctorSpecialization + " \n");
     }
 
-    private void EventChangeListener() {
-        CollectionReference collectionReference = db.collection("Doctors");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            int count = 0;
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document: task.getResult()){
-                        specialization.add(document.toObject(DoctorsList.class));
-                        String temp = document.getString("Specialization");
-                        Log.d("Check1", "query: " + temp);
-                    }
+    @Override
+    public int getItemCount() {
+        return patientList.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView doctor_name, appointment_time, doctor_specialization, appointment_date, cancel_appointment, join_meeting;
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+            doctor_name = itemView.findViewById(R.id.patient_name);
+            doctor_specialization = itemView.findViewById(R.id.doctor_specialization);
+            appointment_time = itemView.findViewById(R.id.appointment_time);
+            appointment_date = itemView.findViewById(R.id.appointment_date);
+            cancel_appointment = itemView.findViewById(R.id.cancel_appointment);
+            join_meeting = itemView.findViewById(R.id.join_meeting);
+
+            cancel_appointment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
                 }
+            });
+
+
+        }
+
+
+
+        @Override
+        public void onClick(View view)  {
+            //Log.d("Check1", "clicked");
+
+
+
+            int position = this.getAdapterPosition();
+            Patient patientObj = patientList.get(position);
+            String date, slot, doc_email,pat_email;
+            date = patientObj.getDate();
+            slot = changeTimeToSlot( patientObj.getTime() );
+
+            SharedPreferences sp = view.getContext().getSharedPreferences("patientData", Context.MODE_PRIVATE);
+            pat_email = sp.getString("patient_email", "");
+            pat_email = pat_email.replace('.',',');
+
+            doc_email = patientObj.doctorId.replace('.',',');
+            Toast.makeText(context, "Position is: " + String.valueOf(position)+
+                    "doctor_mail is: " + patientObj.doctorId, Toast.LENGTH_SHORT).show();
+
+            //mDatabase.child("Appointment").child(doctorID).child(Appointment_date).child(slot).removeValue();
+            //mDatabase.child("Booked_Appointments").child(currentUID).child(BookedAPKey).removeValue();
+            databaseReference.child("AppointmentDoctor").child(doc_email).child(date).child(slot).removeValue();
+            databaseReference.child("AppointmentPatient").child(pat_email).child(date).child(slot).removeValue();
+            patientList.remove(position);
+            notifyDataSetChanged();
+            //notifyItemRemoved(getAdapterPosition());
+
+            //notifyItemRemoved(this.getLayoutPosition());
+
+
+
+
+            Toast.makeText(context, "Removed Successfully", Toast.LENGTH_SHORT).show();
+
+            // TODO: Make an alert box while the user is clicking on delete.
+
+        }
+
+        private String changeTimeToSlot(String time) {
+            String slot = "";
+            switch (time){
+
+                case "08:00 AM":
+                    slot = "1";
+                    break;
+                case "08:20 AM":
+                    slot = "2";
+                    break;
+                case "08:40 AM":
+                    slot = "3";
+                    break;
+                case "09:00 AM":
+                    slot = "4";
+                    break;
+                case "09:20 AM":
+                    slot = "5";
+                    break;
+                case "09:40 AM":
+                    slot = "6";
+                    break;
+                case "10:00 AM":
+                    slot = "7";
+                    break;
+                case "10:20 AM":
+                    slot = "8";
+                    break;
+                case "10:40 AM":
+                    slot = "9";
+                    break;
+                case "11:00 AM":
+                    slot = "10";
+                    break;
+                case "11:20 AM":
+                    slot = "11";
+                    break;
+                case "11:40 AM":
+                    slot = "12";
+                    break;
+                case "02:00 PM":
+                    slot = "13";
+                    break;
+                case "02:20 PM":
+                    slot = "14";
+                    break;
+                case "02:40 PM":
+                    slot = "15";
+                    break;
+
+                default:
+                    break;
             }
-
-        });
-    }
-    public static class DoctorListViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-        public DoctorListViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
+            return  slot;
         }
 
-        public void setDoctorName(String doctorName) {
-            TextView userName = mView.findViewById(R.id.doctor_name);
-            userName.setText(doctorName);
-        }
-
-        public void setSpecialization(String specialization) {
-            TextView userName = mView.findViewById(R.id.special_id_single_user);
-            userName.setText(specialization);
-        }
     }
 
 
-    public class SpecializationViewHolder extends RecyclerView.ViewHolder {
-
-        View mView;
-
-        public SpecializationViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-
-        public void setSpecialization(String special) {
-            TextView userName = mView.findViewById(R.id.special_id_single_user);
-            userName.setText(special);
-        }
-
-        public void setImage(int i) {
-
-            CircleImageView imageView = mView.findViewById(R.id.profile_id_single_user);
-            if (i == 1) {
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.stethoscope));
-            } else {
-                imageView.setImageDrawable(getResources().getDrawable(R.mipmap.injection));
-            }
-
-        }
-    }
-
-    /*
-    private void EventChangeListener() {
-
-        db.collection("Doctors")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if(error != null){
-
-                            if(progressDialog.isShowing()){
-                                progressDialog.dismiss();
-                            }
-
-                            Log.e("Firststore error", error.getMessage());
-                            return ;
-                        }
-                        int count = 0;
-                        for (DocumentChange dc: value.getDocumentChanges()){
-                            if (dc.getType() == DocumentChange.Type.ADDED){
-                                //Log.d("counter", String.valueOf(++count));
-
-                                doctorsListArrayList.add(dc.getDocument().toObject(DoctorsList.class));
-
-                            }
-                            doctorAdaptor.notifyDataSetChanged();
-                        }
-                    }
-                });
-
-    }
-    */
 }
