@@ -17,7 +17,11 @@ import com.example.appointmentmodule.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHolder > {
@@ -115,8 +119,47 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.MyViewHo
                     pat_email = sp.getString("patient_email", "");
                     doc_email = patientObj.doctorId;
 
-                    String meet_code = doc_email + pat_email + date + time;
-                    Toast.makeText(context, "MeetCode is: " + meet_code, Toast.LENGTH_SHORT).show();
+                    String sDate = "";
+                    Date appointment_date = null;
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+                    try {
+                        appointment_date = sdf.parse(date+" "+time);
+                        sDate= sdf.format(appointment_date);
+
+                    } catch (ParseException e) {
+                        Toast.makeText(context, "Error parsing date", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                    Date today_date = Calendar.getInstance().getTime();
+                    String today_str = sdf.format(today_date);
+
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(appointment_date);
+                    c.add(Calendar.MINUTE, 20);
+
+                    Date updated = c.getTime();
+
+
+                    String updated_date = sdf.format(updated);
+                    System.out.println("Updated date is: " + updated_date);
+
+                    if ( ( today_date.equals(appointment_date) || today_date.after(appointment_date) ) &&
+                            ( today_date.equals(updated) || today_date.before(updated) )
+                    )   {
+
+                        String meet_code = doc_email + pat_email + date + time;
+                        System.out.println("Meet Code: " + meet_code);
+
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("patient_meet_code", meet_code);
+                        editor.commit();
+                    }
+                    else if( today_date.after(updated) ){
+                        System.out.println("Meeting has ended");
+                    }
+                    else{
+                        System.out.println("Meeting yet to start");
+                    }
 
                 }
             });

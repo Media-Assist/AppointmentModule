@@ -127,7 +127,7 @@ public class PatientDetailsAdapter extends RecyclerView.Adapter<PatientDetailsAd
                 //startActivity(intent);
                 //Toast.makeText(Login.this, "email sent is: " + email, Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = sp.edit();
-                editor.putString("meet_code", meet_code);
+                editor.putString("doctor_meet_code", meet_code);
                 editor.commit();
             }
             else if( today_date.after(updated) ){

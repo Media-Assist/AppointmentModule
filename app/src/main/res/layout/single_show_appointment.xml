@@ -115,8 +115,12 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="click here "
-                    android:textColorHint="#FFFFFF" />
+                    android:text="Click here to join"
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
